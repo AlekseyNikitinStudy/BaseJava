@@ -13,9 +13,8 @@ public class ArrayStorage {
     }
 
     void save(Resume r) {
-        int newIndex = size;
-        if (newIndex < 10_000) {
-            storage[newIndex] = r;
+        if (size < 10_000) {
+            storage[size] = r;
             size++;
         }
     }
@@ -45,7 +44,7 @@ public class ArrayStorage {
      * @return array, contains only Resumes in storage (without null)
      */
     Resume[] getAll() {
-        return Arrays.copyOf(storage, size());
+        return Arrays.copyOf(storage, size);
     }
 
     int size() {
