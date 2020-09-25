@@ -23,16 +23,18 @@ public class ArrayStorage {
                 storage[size] = resume;
                 size++;
             } else {
-                System.out.println("Резюме с UUID = " + resume.getUuid() + " есть в ArrayStorage.");
+                System.out.println("Резюме с UUID = " + resume.getUuid() + " есть в storage.");
             }
         } else {
-            System.out.println("Переполнение ArrayStorage.");
+            System.out.println("Переполнение storage.");
         }
     }
 
     public void update(Resume resume) {
         if ((index = getIndex(resume.getUuid())) >= 0) {
             storage[index] = resume;
+        } else {
+            System.out.println("Нет Резюме с UUID = " + resume.getUuid() + " в storage.");
         }
     }
 
@@ -40,6 +42,7 @@ public class ArrayStorage {
         if ((index = getIndex(uuid)) >= 0) {
             return storage[index];
         } else {
+            System.out.println("Нет Резюме с UUID = " + uuid + " в storage.");
             return null;
         }
     }
@@ -50,6 +53,8 @@ public class ArrayStorage {
                 System.arraycopy(storage, index + 1, storage, index, size - index + 1);
                 size--;
             }
+        } else {
+            System.out.println("Нет Резюме с UUID = " + uuid + " в storage.");
         }
     }
 
@@ -59,7 +64,6 @@ public class ArrayStorage {
                 return i;
             }
         }
-        System.out.println("Нет Резюме с UUID = " + uuid + " в ArrayStorage.");
         return -1;
     }
 
