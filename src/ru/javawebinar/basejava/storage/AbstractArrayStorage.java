@@ -8,11 +8,10 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public abstract class AbstractArrayStorage implements Storage {
-    protected static final int STORAGE_LIMIT = 10000;
+    private static final int STORAGE_LIMIT = 10_000;
 
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
-    protected int index;
 
     public int size() {
         return size;
@@ -24,9 +23,9 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     public void save(Resume resume) {
+        int index;
         if (size < storage.length) {
             if ((index = getIndex(resume.getUuid())) < 0) {
-                System.out.println(index);
                 addElement(index, resume);
                 size++;
             } else {
@@ -38,6 +37,7 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     public void update(Resume resume) {
+        int index;
         if ((index = getIndex(resume.getUuid())) >= 0) {
             storage[index] = resume;
         } else {
@@ -46,11 +46,11 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     public void delete(String uuid) {
+        int index;
         if ((index = getIndex(uuid)) >= 0) {
-            if (size - index + 1 >= 0) {
-                removeElement(index);
-                size--;
-            }
+            removeElement(index);
+            storage[size - 1] = null;
+            size--;
         } else {
             System.out.println("Нет Резюме с UUID = " + uuid + " в storage.");
         }
@@ -61,12 +61,13 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     public Resume get(String uuid) {
+        int index;
         if ((index = getIndex(uuid)) >= 0) {
             return storage[index];
-        } else {
-            System.out.println("Нет Резюме с UUID = " + uuid + " в storage.");
-            return null;
         }
+
+        System.out.println("Нет Резюме с UUID = " + uuid + " в storage.");
+        return null;
     }
 
     protected abstract int getIndex(String uuid);
