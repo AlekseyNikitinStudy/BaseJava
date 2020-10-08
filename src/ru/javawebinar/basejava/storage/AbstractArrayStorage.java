@@ -10,8 +10,8 @@ import java.util.Arrays;
 public abstract class AbstractArrayStorage implements Storage {
     private static final int STORAGE_LIMIT = 10_000;
 
-    protected Resume[] storage = new Resume[STORAGE_LIMIT];
-    protected int size = 0;
+    Resume[] storage = new Resume[STORAGE_LIMIT];
+    int size = 0;
 
     public int size() {
         return size;
@@ -23,9 +23,9 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     public void save(Resume resume) {
-        int index;
+        int index = getIndex(resume.getUuid());
         if (size < storage.length) {
-            if ((index = getIndex(resume.getUuid())) < 0) {
+            if (index < 0) {
                 addElement(index, resume);
                 size++;
             } else {
@@ -37,8 +37,8 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     public void update(Resume resume) {
-        int index;
-        if ((index = getIndex(resume.getUuid())) >= 0) {
+        int index = getIndex(resume.getUuid());
+        if (index >= 0) {
             storage[index] = resume;
         } else {
             System.out.println("Нет Резюме с UUID = " + resume.getUuid() + " в storage.");
@@ -46,8 +46,8 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     public void delete(String uuid) {
-        int index;
-        if ((index = getIndex(uuid)) >= 0) {
+        int index = getIndex(uuid);
+        if (index >= 0) {
             removeElement(index);
             storage[size - 1] = null;
             size--;
@@ -61,8 +61,8 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     public Resume get(String uuid) {
-        int index;
-        if ((index = getIndex(uuid)) >= 0) {
+        int index = getIndex(uuid);
+        if (index >= 0) {
             return storage[index];
         }
 
@@ -70,9 +70,9 @@ public abstract class AbstractArrayStorage implements Storage {
         return null;
     }
 
-    protected abstract int getIndex(String uuid);
+    abstract int getIndex(String uuid);
 
-    protected abstract void addElement(int index, Resume resume);
+    abstract void addElement(int index, Resume resume);
 
-    protected abstract void removeElement(int index);
+    abstract void removeElement(int index);
 }
