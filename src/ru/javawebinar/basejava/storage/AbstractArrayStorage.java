@@ -11,7 +11,7 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public abstract class AbstractArrayStorage implements Storage {
-    private static final int STORAGE_LIMIT = 10_000;
+    protected static final int STORAGE_LIMIT = 10_000;
 
     Resume[] storage = new Resume[STORAGE_LIMIT];
     int size = 0;
@@ -25,7 +25,7 @@ public abstract class AbstractArrayStorage implements Storage {
         size = 0;
     }
 
-    public void save(Resume resume) {
+    public void save(Resume resume) throws StorageException {
         int index = getIndex(resume.getUuid());
         if (size < storage.length) {
             if (index < 0) {
@@ -39,7 +39,7 @@ public abstract class AbstractArrayStorage implements Storage {
         }
     }
 
-    public void update(Resume resume) {
+    public void update(Resume resume) throws NotExistStorageException {
         int index = getIndex(resume.getUuid());
         if (index >= 0) {
             storage[index] = resume;
@@ -48,7 +48,7 @@ public abstract class AbstractArrayStorage implements Storage {
         }
     }
 
-    public void delete(String uuid) {
+    public void delete(String uuid) throws NotExistStorageException {
         int index = getIndex(uuid);
         if (index >= 0) {
             removeElement(index);
@@ -63,7 +63,7 @@ public abstract class AbstractArrayStorage implements Storage {
         return Arrays.copyOf(storage, size);
     }
 
-    public Resume get(String uuid) {
+    public Resume get(String uuid) throws NotExistStorageException {
         int index = getIndex(uuid);
         if (index >= 0) {
             return storage[index];
