@@ -25,7 +25,7 @@ public abstract class AbstractArrayStorage implements Storage {
         size = 0;
     }
 
-    public void save(Resume resume) throws StorageException {
+    public void save(Resume resume) {
         int index = getIndex(resume.getUuid());
         if (size < storage.length) {
             if (index < 0) {
@@ -39,7 +39,7 @@ public abstract class AbstractArrayStorage implements Storage {
         }
     }
 
-    public void update(Resume resume) throws NotExistStorageException {
+    public void update(Resume resume) {
         int index = getIndex(resume.getUuid());
         if (index >= 0) {
             storage[index] = resume;
@@ -48,7 +48,7 @@ public abstract class AbstractArrayStorage implements Storage {
         }
     }
 
-    public void delete(String uuid) throws NotExistStorageException {
+    public void delete(String uuid) {
         int index = getIndex(uuid);
         if (index >= 0) {
             removeElement(index);
@@ -63,7 +63,7 @@ public abstract class AbstractArrayStorage implements Storage {
         return Arrays.copyOf(storage, size);
     }
 
-    public Resume get(String uuid) throws NotExistStorageException {
+    public Resume get(String uuid) {
         int index = getIndex(uuid);
         if (index >= 0) {
             return storage[index];

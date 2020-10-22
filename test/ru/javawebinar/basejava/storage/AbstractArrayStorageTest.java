@@ -41,10 +41,10 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void save() {
-        Resume savedResume = new Resume(UUID_4);
-        storage.save(savedResume);
+        Resume newResume = new Resume(UUID_4);
+        storage.save(newResume);
         Assert.assertEquals(4, storage.size());
-        Assert.assertEquals(savedResume, storage.get(UUID_4));
+        Assert.assertEquals(newResume, storage.get(UUID_4));
     }
 
     @Test(expected = StorageException.class)
@@ -54,13 +54,13 @@ public abstract class AbstractArrayStorageTest {
                 storage.save(new Resume(String.valueOf(i)));
             }
         } catch (StorageException e) {
-            Assert.fail();
+            Assert.fail("Overflow happens earlier than expected");
         }
         storage.save(new Resume("Overflow"));
     }
 
     @Test(expected = ExistStorageException.class)
-    public void saveExists() throws ExistStorageException {
+    public void saveExist() throws ExistStorageException {
         storage.save(new Resume(UUID_1));
     }
 
@@ -77,10 +77,11 @@ public abstract class AbstractArrayStorageTest {
         storage.update(updatedResume);
     }
 
-    @Test
+    @Test(expected = NotExistStorageException.class)
     public void delete() {
         storage.delete(UUID_1);
         Assert.assertEquals(2, storage.size());
+        storage.get(UUID_1);
     }
 
     @Test(expected = NotExistStorageException.class)
