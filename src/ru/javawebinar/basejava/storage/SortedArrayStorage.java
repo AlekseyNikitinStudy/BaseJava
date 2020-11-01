@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
 
-    void addElement(int index, Resume resume){
+    void addElementTo(int index, Resume resume){
         int indexAdd = - index - 1;
         System.arraycopy(storage, indexAdd, storage, indexAdd + 1, size - indexAdd);
         storage[indexAdd] = resume;

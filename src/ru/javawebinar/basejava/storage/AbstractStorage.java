@@ -2,11 +2,9 @@ package ru.javawebinar.basejava.storage;
 
 import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
-import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
-    protected static final int STORAGE_LIMIT = 10_000;
 
     public void update(Resume resume) {
         int index = getIndex(resume.getUuid());
@@ -19,14 +17,10 @@ public abstract class AbstractStorage implements Storage {
 
     public void save(Resume resume) {
         int index = getIndex(resume.getUuid());
-        if (!isOverflow()) {
-            if (index < 0) {
-                addElement(index, resume);
-            } else {
-                throw new ExistStorageException(resume.getUuid());
-            }
+        if (index < 0) {
+            addElement(index, resume);
         } else {
-            throw new StorageException("Storage overflow", resume.getUuid());
+            throw new ExistStorageException(resume.getUuid());
         }
     }
 
@@ -51,8 +45,6 @@ public abstract class AbstractStorage implements Storage {
     abstract int getIndex(String uuid);
 
     abstract void updateByIndex(int index, Resume resume);
-
-    abstract boolean isOverflow();
 
     abstract void addElement(int index, Resume resume);
 

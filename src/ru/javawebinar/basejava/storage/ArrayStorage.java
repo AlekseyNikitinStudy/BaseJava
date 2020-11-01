@@ -7,7 +7,7 @@ import ru.javawebinar.basejava.model.Resume;
  */
 public class ArrayStorage extends AbstractArrayStorage {
 
-    void addElement(int index, Resume resume){
+    void addElementTo(int index, Resume resume){
         storage[size] = resume;
         size++;
     }
