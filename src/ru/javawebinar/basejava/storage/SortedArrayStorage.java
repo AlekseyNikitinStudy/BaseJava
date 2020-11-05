@@ -6,19 +6,17 @@ import java.util.Arrays;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
 
-    void addElementTo(int index, Resume resume){
+    void addElementArray(int index, Resume resume) {
         int indexAdd = - index - 1;
         System.arraycopy(storage, indexAdd, storage, indexAdd + 1, size - indexAdd);
         storage[indexAdd] = resume;
-        size++;
     }
 
-    void removeElement(int index) {
+    void removeElementArray(int index) {
         int elementsMoved = size - index - 1;
         if (elementsMoved > 0) {
             System.arraycopy(storage, index + 1, storage, index, elementsMoved);
         }
-        fillDeleted();
     }
 
     int getIndex(String uuid) {

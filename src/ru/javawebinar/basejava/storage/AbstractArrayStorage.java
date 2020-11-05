@@ -22,20 +22,20 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         size = 0;
     }
 
-    void addElement(int index, Resume resume){
+    void addElement(int index, Resume resume) {
         if (size >= storage.length) {
             throw new StorageException("Storage overflow", resume.getUuid());
         }
-        addElementTo(index, resume);
+        addElementArray(index, resume);
+        size++;
     }
-
-    abstract void addElementTo(int index, Resume resume);
 
     void updateByIndex(int index, Resume resume) {
         storage[index] = resume;
     }
 
-    protected void fillDeleted() {
+    void removeElement(int index) {
+        removeElementArray(index);
         storage[size - 1] = null;
         size--;
     }
@@ -48,4 +48,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return storage[index];
     }
 
+    abstract void addElementArray(int index, Resume resume);
+
+    abstract void removeElementArray(int index);
 }
