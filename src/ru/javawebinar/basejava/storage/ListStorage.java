@@ -16,10 +16,6 @@ public class ListStorage extends AbstractStorage {
         storage.clear();
     }
 
-    /*public boolean isOverflow() {
-        return storage.size() >= STORAGE_LIMIT;
-    }
-*/
     void updateByIndex(int index, Resume resume) {
         storage.set(index, resume);
     }
