@@ -33,11 +33,11 @@ public class ListStorage extends AbstractStorage {
         return -1;
     }
 
-    Resume getByIndex(int index) {
+    Resume getByIndex(int index, String uuid) {
         return storage.get(index);
     }
 
-    void removeElement(int index) {
+    void removeElement(int index, String uuid) {
         storage.remove(index);
     }
 

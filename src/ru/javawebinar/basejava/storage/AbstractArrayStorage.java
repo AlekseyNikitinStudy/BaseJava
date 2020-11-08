@@ -34,7 +34,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         storage[index] = resume;
     }
 
-    void removeElement(int index) {
+    void removeElement(int index, String uuid) {
         removeElementArray(index);
         storage[size - 1] = null;
         size--;
@@ -44,7 +44,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return Arrays.copyOf(storage, size);
     }
 
-    Resume getByIndex(int index) {
+    Resume getByIndex(int index, String uuid) {
         return storage[index];
     }
 
