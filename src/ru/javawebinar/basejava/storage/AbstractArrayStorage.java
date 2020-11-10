@@ -10,8 +10,8 @@ import java.util.Arrays;
  */
 public abstract class AbstractArrayStorage extends AbstractStorage {
     protected static final int STORAGE_LIMIT = 10_000;
-    Resume[] storage = new Resume[STORAGE_LIMIT];
-    int size = 0;
+    protected Resume[] storage = new Resume[STORAGE_LIMIT];
+    protected int size = 0;
 
     public int size() {
         return size;
@@ -22,20 +22,20 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         size = 0;
     }
 
-    void addElement(int index, Resume resume) {
+    protected void addElement(Object searchKey, Resume resume) {
         if (size >= storage.length) {
             throw new StorageException("Storage overflow", resume.getUuid());
         }
-        addElementArray(index, resume);
+        addElementArray(searchKey, resume);
         size++;
     }
 
-    void updateByIndex(int index, Resume resume) {
-        storage[index] = resume;
+    protected void updateByIndex(Object searchKey, Resume resume) {
+        storage[(int)searchKey] = resume;
     }
 
-    void removeElement(int index, String uuid) {
-        removeElementArray(index);
+    protected void removeElement(Object searchKey) {
+        removeElementArray(searchKey);
         storage[size - 1] = null;
         size--;
     }
@@ -44,11 +44,15 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return Arrays.copyOf(storage, size);
     }
 
-    Resume getByIndex(int index, String uuid) {
-        return storage[index];
+    protected Resume getByIndex(Object searchKey) {
+        return storage[(int)searchKey];
     }
 
-    abstract void addElementArray(int index, Resume resume);
+    protected boolean isSearchKeyExists(Object searchKey) {
+        return (int) searchKey >= 0;
+    }
 
-    abstract void removeElementArray(int index);
+    abstract void addElementArray(Object searchKey, Resume resume);
+
+    abstract void removeElementArray(Object searchKey);
 }

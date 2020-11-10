@@ -7,48 +7,46 @@ import ru.javawebinar.basejava.model.Resume;
 public abstract class AbstractStorage implements Storage {
 
     public void update(Resume resume) {
-        int index = getIndex(resume.getUuid());
-        if (index >= 0) {
-            updateByIndex(index, resume);
-        } else {
-            throw new NotExistStorageException(resume.getUuid());
-        }
+        updateByIndex(getSearchKeyIfExists(resume.getUuid()), resume);
     }
 
     public void save(Resume resume) {
-        int index = getIndex(resume.getUuid());
-        if (index < 0) {
-            addElement(index, resume);
-        } else {
-            throw new ExistStorageException(resume.getUuid());
-        }
+        addElement(getSearchKeyIfNotExists(resume.getUuid()), resume);
     }
 
     public void delete(String uuid) {
-        int index = getIndex(uuid);
-        if (index >= 0) {
-            removeElement(index, uuid);
-        } else {
-            throw new NotExistStorageException(uuid);
-        }
+        removeElement(getSearchKeyIfExists(uuid));
     }
 
     public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index >= 0) {
-            return getByIndex(index, uuid);
-        }
+        return getByIndex(getSearchKeyIfExists(uuid));
+    }
 
+    private Object getSearchKeyIfExists(String uuid) {
+        Object searchKey = getSearchKey(uuid);
+        if (isSearchKeyExists(searchKey)) {
+            return searchKey;
+        }
         throw new NotExistStorageException(uuid);
     }
 
-    abstract int getIndex(String uuid);
+    private Object getSearchKeyIfNotExists(String uuid) {
+        Object searchKey = getSearchKey(uuid);
+        if (!isSearchKeyExists(searchKey)) {
+            return searchKey;
+        }
+        throw new ExistStorageException(uuid);
+    }
 
-    abstract void updateByIndex(int index, Resume resume);
+    abstract Object getSearchKey(String uuid);
 
-    abstract void addElement(int index, Resume resume);
+    abstract void updateByIndex(Object searchKey, Resume resume);
 
-    abstract void removeElement(int index, String uuid);
+    abstract void addElement(Object searchKey, Resume resume);
 
-    abstract Resume getByIndex(int index, String uuid);
+    abstract void removeElement(Object searchKey);
+
+    abstract Resume getByIndex(Object searchKey);
+
+    abstract boolean isSearchKeyExists(Object searchKey);
 }
