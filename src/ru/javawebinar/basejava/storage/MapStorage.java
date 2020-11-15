@@ -16,30 +16,36 @@ public class MapStorage extends AbstractStorage {
         storage.clear();
     }
 
+    @Override
     void updateByIndex(Object searchKey, Resume resume) {
-        storage.put((String)searchKey, resume);
+        storage.put((String) searchKey, resume);
     }
 
     public Resume[] getAll() {
         return storage.values().toArray(new Resume[0]);
     }
 
+    @Override
     protected Object getSearchKey(String uuid) {
         return uuid;
     }
 
+    @Override
     protected void addElement(Object searchKey, Resume resume) {
-        storage.put((String)searchKey, resume);
+        storage.put((String) searchKey, resume);
     }
 
+    @Override
     protected void removeElement(Object searchKey) {
         storage.remove(searchKey);
     }
 
+    @Override
     protected Resume getByIndex(Object searchKey) {
         return storage.get(searchKey);
     }
 
+    @Override
     protected boolean isSearchKeyExists(Object searchKey) {
         return storage.containsKey(searchKey);
     }
