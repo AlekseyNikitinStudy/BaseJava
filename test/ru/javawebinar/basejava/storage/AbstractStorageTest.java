@@ -8,6 +8,9 @@ import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public abstract class AbstractStorageTest {
     protected Storage storage;
 
@@ -22,10 +25,10 @@ public abstract class AbstractStorageTest {
     protected static final Resume RESUME_4;
 
     static {
-        RESUME_1 = new Resume(UUID_1);
-        RESUME_2 = new Resume(UUID_2);
-        RESUME_3 = new Resume(UUID_3);
-        RESUME_4 = new Resume(UUID_4);
+        RESUME_1 = new Resume(UUID_1, "Ivan Ivanov");
+        RESUME_2 = new Resume(UUID_2, "Petr Petrov");
+        RESUME_3 = new Resume(UUID_3, "Petr Petrov");
+        RESUME_4 = new Resume(UUID_4, "Taras Tarasov");
     }
 
     protected AbstractStorageTest(Storage storage) {
@@ -89,11 +92,14 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    public void getAll() {
-        Resume[] actualResumes = storage.getAll();
-        Resume[] expectedResumes = {RESUME_1, RESUME_2, RESUME_3};
-        Assert.assertEquals(3, actualResumes.length);
-        Assert.assertArrayEquals(expectedResumes, actualResumes);
+    public void getAllSorted() {
+        List<Resume> actualResumes = storage.getAllSorted();
+        List<Resume> expectedResumes = new LinkedList<>();
+        expectedResumes.add(RESUME_1);
+        expectedResumes.add(RESUME_2);
+        expectedResumes.add(RESUME_3);
+        Assert.assertEquals(3, actualResumes.size());
+        Assert.assertArrayEquals(expectedResumes.toArray(), actualResumes.toArray());
     }
 
     @Test
