@@ -19,16 +19,21 @@ public abstract class AbstractStorageTest {
     private static final String UUID_3 = "uuid3";
     private static final String UUID_4 = "uuid4";
 
+    private static final String FULLNAME_1 = "Ivan Ivanov";
+    private static final String FULLNAME_2 = "Petr Petrov";
+    private static final String FULLNAME_3 = "Petr Petrov";
+    private static final String FULLNAME_4 = "Taras Tarasov";
+
     protected static final Resume RESUME_1;
     protected static final Resume RESUME_2;
     protected static final Resume RESUME_3;
     protected static final Resume RESUME_4;
 
     static {
-        RESUME_1 = new Resume(UUID_1, "Ivan Ivanov");
-        RESUME_2 = new Resume(UUID_2, "Petr Petrov");
-        RESUME_3 = new Resume(UUID_3, "Petr Petrov");
-        RESUME_4 = new Resume(UUID_4, "Taras Tarasov");
+        RESUME_1 = new Resume(UUID_1, FULLNAME_1);
+        RESUME_2 = new Resume(UUID_2, FULLNAME_2);
+        RESUME_3 = new Resume(UUID_3, FULLNAME_3);
+        RESUME_4 = new Resume(UUID_4, FULLNAME_4);
     }
 
     protected AbstractStorageTest(Storage storage) {
@@ -68,7 +73,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() {
-        Resume updatedResume = new Resume(UUID_1);
+        Resume updatedResume = new Resume(UUID_1, FULLNAME_1);
         storage.update(updatedResume);
         Assert.assertEquals(updatedResume, storage.get(UUID_1));
     }
@@ -98,8 +103,7 @@ public abstract class AbstractStorageTest {
         expectedResumes.add(RESUME_1);
         expectedResumes.add(RESUME_2);
         expectedResumes.add(RESUME_3);
-        Assert.assertEquals(3, actualResumes.size());
-        Assert.assertArrayEquals(expectedResumes.toArray(), actualResumes.toArray());
+        Assert.assertEquals(expectedResumes, actualResumes);
     }
 
     @Test
