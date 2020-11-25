@@ -12,7 +12,7 @@ public abstract class AbstractStorage implements Storage {
             thenComparing(Resume::getUuid);
 
     public void update(Resume resume) {
-        updateByIndex(getSearchKeyIfExists(resume.getUuid()), resume);
+        updateBySearchKey(getSearchKeyIfExists(resume.getUuid()), resume);
     }
 
     public void save(Resume resume) {
@@ -24,7 +24,7 @@ public abstract class AbstractStorage implements Storage {
     }
 
     public Resume get(String uuid) {
-        return getByIndex(getSearchKeyIfExists(uuid));
+        return getBySearchKey(getSearchKeyIfExists(uuid));
     }
 
     private Object getSearchKeyIfExists(String uuid) {
@@ -53,13 +53,13 @@ public abstract class AbstractStorage implements Storage {
 
     abstract Object getSearchKey(String uuid);
 
-    abstract void updateByIndex(Object searchKey, Resume resume);
+    abstract void updateBySearchKey(Object searchKey, Resume resume);
 
     abstract void addElement(Object searchKey, Resume resume);
 
     abstract void removeElement(Object searchKey);
 
-    abstract Resume getByIndex(Object searchKey);
+    abstract Resume getBySearchKey(Object searchKey);
 
     abstract boolean isSearchKeyExists(Object searchKey);
 }

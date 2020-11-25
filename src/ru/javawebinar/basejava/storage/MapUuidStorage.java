@@ -5,7 +5,7 @@ import ru.javawebinar.basejava.model.Resume;
 public class MapUuidStorage extends AbstractMapStorage {
 
     @Override
-    void updateByIndex(Object searchKey, Resume resume) {
+    void updateBySearchKey(Object searchKey, Resume resume) {
         storage.put((String) searchKey, resume);
     }
 
@@ -25,7 +25,7 @@ public class MapUuidStorage extends AbstractMapStorage {
     }
 
     @Override
-    protected Resume getByIndex(Object searchKey) {
+    protected Resume getBySearchKey(Object searchKey) {
         return storage.get(searchKey);
     }
 

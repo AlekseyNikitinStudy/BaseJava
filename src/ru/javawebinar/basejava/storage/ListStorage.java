@@ -22,7 +22,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected void updateByIndex(Object searchKey, Resume resume) {
+    protected void updateBySearchKey(Object searchKey, Resume resume) {
         storage.set((int) searchKey, resume);
     }
 
@@ -37,7 +37,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected Resume getByIndex(Object searchKey) {
+    protected Resume getBySearchKey(Object searchKey) {
         return storage.get((int) searchKey);
     }
 
