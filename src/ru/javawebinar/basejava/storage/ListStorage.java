@@ -5,7 +5,7 @@ import ru.javawebinar.basejava.model.Resume;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListStorage extends AbstractStorage {
+public class ListStorage extends AbstractStorage<Integer> {
     private List<Resume> storage = new ArrayList<>();
 
     public int size() {
@@ -22,12 +22,12 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected void updateBySearchKey(Object searchKey, Resume resume) {
-        storage.set((int) searchKey, resume);
+    protected void updateBySearchKey(Integer searchKey, Resume resume) {
+        storage.set(searchKey, resume);
     }
 
     @Override
-    protected Object getSearchKey(String uuid) {
+    protected Integer getSearchKey(String uuid) {
         for (int i = 0; i < storage.size(); i++) {
             if (storage.get(i).getUuid().equals(uuid)) {
                 return i;
@@ -37,22 +37,22 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected Resume getBySearchKey(Object searchKey) {
-        return storage.get((int) searchKey);
+    protected Resume getBySearchKey(Integer searchKey) {
+        return storage.get(searchKey);
     }
 
     @Override
-    protected void removeElement(Object searchKey) {
+    protected void removeElement(Integer searchKey) {
         storage.remove((int) searchKey);
     }
 
     @Override
-    protected void addElement(Object searchKey, Resume resume) {
+    protected void addElement(Integer searchKey, Resume resume) {
         storage.add(resume);
     }
 
     @Override
-    protected boolean isSearchKeyExists(Object searchKey) {
-        return (int) searchKey >= 0;
+    protected boolean isSearchKeyExists(Integer searchKey) {
+        return searchKey >= 0;
     }
 }
