@@ -29,9 +29,9 @@ public class OrganizationSection {
 
     @Override
     public String toString() {
-        return "\nOrganizationSection{" +
+        return "OrganizationSection{" +
                 "name='" + name + '\'' +
                 ", periods=" + periods +
-                '}';
+                '}' + "\n";
     }
 }

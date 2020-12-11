@@ -1,7 +1,6 @@
 package ru.javawebinar.basejava.model;
 
 import java.time.LocalDate;
-import java.util.logging.Logger;
 
 public class ExperiencePeriod {
     private LocalDate start;
@@ -18,11 +17,11 @@ public class ExperiencePeriod {
 
     @Override
     public String toString() {
-        return "\nExperiencePeriod{" +
+        return "ExperiencePeriod{" +
                 "start=" + start +
                 ", end=" + end +
                 ", position='" + position + '\'' +
                 ", experience='" + experience + '\'' +
-                '}';
+                '}' + "\n";
     }
 }

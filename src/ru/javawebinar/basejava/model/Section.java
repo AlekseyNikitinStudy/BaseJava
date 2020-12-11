@@ -15,8 +15,8 @@ public class Section<N> {
 
     @Override
     public String toString() {
-        return "\nSection{" +
+        return "Section{" +
                 "nodes=" + nodes +
-                '}';
+                '}' + "\n";
     }
 }
