@@ -1,25 +1,22 @@
 package ru.javawebinar.basejava.model;
 
-import java.util.LinkedList;
 import java.util.List;
 
-public class Section<SN> {
-    private SectionType type;
-    private List<SN> values = new LinkedList<>();
+public class Section<N> {
+    private List<N> nodes;
 
-    public Section(SectionType type) {
-        this.type = type;
+    public List<N> getNodes() {
+        return nodes;
     }
 
-    public void add(SN node) {
-        values.add(node);
+    public void setNodes(List<N> nodes) {
+        this.nodes = nodes;
     }
 
     @Override
     public String toString() {
-        return "Section{" +
-                "type=" + type +
-                ", values=" + values +
+        return "\nSection{" +
+                "nodes=" + nodes +
                 '}';
     }
 }

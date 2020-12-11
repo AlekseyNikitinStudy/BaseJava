@@ -9,9 +9,9 @@ public class Resume {
 
     private String fullName;
 
-    private List<Contact> contacts = new LinkedList<>();
+    private Map<ContactType, String> contacts;
 
-    private Map<SectionType, Section> sections = new HashMap<>();
+    private Map<SectionType, Section<?>> sections;
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
@@ -30,25 +30,20 @@ public class Resume {
         return fullName;
     }
 
-    public List<Contact> getContacts() {
+    public Map<ContactType, String> getContacts() {
         return contacts;
     }
 
-    public Map<SectionType, Section> getSections() {
+    public void setContacts(Map<ContactType, String> contacts) {
+        this.contacts = contacts;
+    }
+
+    public Map<SectionType, Section<?>> getSections() {
         return sections;
     }
 
-    public void addSection(SectionType type, Object node) {
-        Section section = sections.get(type);
-        if (section == null) {
-            section = new Section(type);
-        }
-        section.add(node);
-        sections.put(type, section);
-    }
-
-    public void addContact(Contact contact) {
-        contacts.add(contact);
+    public void setSections(Map<SectionType, Section<?>> sections) {
+        this.sections = sections;
     }
 
     @Override
@@ -71,9 +66,8 @@ public class Resume {
 
     @Override
     public String toString() {
-        return "Resume{" +
-                "uuid='" + uuid + '\'' +
-                ", fullName='" + fullName + '\'' +
-                '}';
+        return fullName + "\n"
+                + contacts.toString() + "\n"
+                + sections.toString() + "\n";
     }
 }
