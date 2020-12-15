@@ -1,4 +1,4 @@
-package ru.javawebinar.basejava.modelSE;
+package ru.javawebinar.basejava.model;
 
 import java.util.List;
 
@@ -6,6 +6,14 @@ public class ListStringSection extends Section {
     private List<String> values;
 
     public ListStringSection(List<String> values) {
+        this.values = values;
+    }
+
+    public List<String> getValues() {
+        return values;
+    }
+
+    public void setValues(List<String> values) {
         this.values = values;
     }
 
