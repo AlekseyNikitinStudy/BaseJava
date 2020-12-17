@@ -2,10 +2,10 @@ package ru.javawebinar.basejava.model;
 
 import java.util.List;
 
-public class ListStringSection extends Section {
+public class BulletedListSection extends AbstractSection {
     private List<String> values;
 
-    public ListStringSection(List<String> values) {
+    public BulletedListSection(List<String> values) {
         this.values = values;
     }
 

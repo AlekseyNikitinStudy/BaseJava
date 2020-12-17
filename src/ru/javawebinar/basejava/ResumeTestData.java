@@ -22,15 +22,15 @@ public class ResumeTestData {
         contacts.put(ContactType.HOMEPAGE, "http://gkislin.ru/");
         resume.setContacts(contacts);
 
-        Map<SectionType, Section> sections = new HashMap<>();
+        Map<SectionType, AbstractSection> sections = new HashMap<>();
 
-        Section objective = new StringSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям");
+        AbstractSection objective = new SingleLineSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям");
         sections.put(SectionType.OBJECTIVE, objective);
 
-        Section personal = new StringSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры.");
+        AbstractSection personal = new SingleLineSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры.");
         sections.put(SectionType.PERSONAL, personal);
 
-        Section achievement = new ListStringSection(Arrays.asList(
+        AbstractSection achievement = new BulletedListSection(Arrays.asList(
                 "С 2013 года: разработка проектов \"Разработка Web приложения\",\"Java Enterprise\", \"Многомодульный maven. Многопоточность. XML (JAXB/StAX). Веб сервисы (JAX-RS/SOAP). Удаленное взаимодействие (JMS/AKKA)\". Организация онлайн стажировок и ведение проектов. Более 1000 выпускников.",
                 "Реализация двухфакторной аутентификации для онлайн платформы управления проектами Wrike. Интеграция с Twilio, DuoSecurity, Google Authenticator, Jira, Zendesk.",
                 "Налаживание процесса разработки и непрерывной интеграции ERP системы River BPM. Интеграция с 1С, Bonita BPM, CMIS, LDAP. Разработка приложения управления окружением на стеке: Scala/Play/Anorm/JQuery. Разработка SSO аутентификации и авторизации различных ERP модулей, интеграция CIFS/SMB java сервера.",
@@ -39,7 +39,7 @@ public class ResumeTestData {
                 "Реализация протоколов по приему платежей всех основных платежных системы России (Cyberplat, Eport, Chronopay, Сбербанк), Белоруcсии(Erip, Osmp) и Никарагуа."));
         sections.put(SectionType.ACHIEVEMENT, achievement);
 
-        Section qualification = new ListStringSection(Arrays.asList(
+        AbstractSection qualification = new BulletedListSection(Arrays.asList(
                 "JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2.",
                 "Version control: Subversion, Git, Mercury, ClearCase, Perforce.",
                 "DB: PostgreSQL(наследование, pgplsql, PL/Python), Redis (Jedis), H2, Oracle, MySQL, SQLite, MS SQL, HSQLDB.",
@@ -54,7 +54,7 @@ public class ResumeTestData {
                 "Родной русский, английский \"upper intermediate\"."));
         sections.put(SectionType.QUALIFICATIONS, qualification);
 
-        Section experience = new CompanySection(Arrays.asList(
+        AbstractSection experience = new CompanySection(Arrays.asList(
                 new Company("Java Online Projects",
                         Collections.singletonList(new Period(LocalDate.of(2013, 10, 1),
                                 LocalDate.now(),
@@ -93,7 +93,7 @@ public class ResumeTestData {
         ));
         sections.put(SectionType.EXPERIENCE, experience);
 
-        Section education = new CompanySection(Arrays.asList(
+        AbstractSection education = new CompanySection(Arrays.asList(
                 new Company("Coursera",
                         Collections.singletonList(new Period(LocalDate.of(2013, 3, 1),
                                 LocalDate.of(2013, 5, 1),

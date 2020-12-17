@@ -1,9 +1,9 @@
 package ru.javawebinar.basejava.model;
 
-public class StringSection extends Section {
+public class SingleLineSection extends AbstractSection {
     private String value;
 
-    public StringSection(String value) {
+    public SingleLineSection(String value) {
         this.value = value;
     }
 
