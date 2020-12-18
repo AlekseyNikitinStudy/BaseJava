@@ -1,15 +1,16 @@
 package ru.javawebinar.basejava.model;
 
+import java.io.Serializable;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class Resume {
+public class Resume implements Serializable {
 
     // Unique identifier
-    private String uuid;
+    private final String uuid;
 
-    private String fullName;
+    private final String fullName;
 
     private Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
 
@@ -62,16 +63,16 @@ public class Resume {
 
         Resume resume = (Resume) o;
 
-        if (!uuid.equals(resume.uuid)) return false;
-        if (!fullName.equals(resume.fullName)) return false;
+        if (uuid != null ? !uuid.equals(resume.uuid) : resume.uuid != null) return false;
+        if (fullName != null ? !fullName.equals(resume.fullName) : resume.fullName != null) return false;
         if (contacts != null ? !contacts.equals(resume.contacts) : resume.contacts != null) return false;
         return sections != null ? sections.equals(resume.sections) : resume.sections == null;
     }
 
     @Override
     public int hashCode() {
-        int result = uuid.hashCode();
-        result = 31 * result + fullName.hashCode();
+        int result = uuid != null ? uuid.hashCode() : 0;
+        result = 31 * result + (fullName != null ? fullName.hashCode() : 0);
         result = 31 * result + (contacts != null ? contacts.hashCode() : 0);
         result = 31 * result + (sections != null ? sections.hashCode() : 0);
         return result;

@@ -1,8 +1,9 @@
 package ru.javawebinar.basejava.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Company {
+public class Company implements Serializable {
     private String name;
 
     private List<Period> periods;
@@ -34,5 +35,23 @@ public class Company {
                 "name='" + name + '\'' +
                 ", periods=" + periods +
                 '}' + "\n";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Company)) return false;
+
+        Company company = (Company) o;
+
+        if (name != null ? !name.equals(company.name) : company.name != null) return false;
+        return periods != null ? periods.equals(company.periods) : company.periods == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (periods != null ? periods.hashCode() : 0);
+        return result;
     }
 }

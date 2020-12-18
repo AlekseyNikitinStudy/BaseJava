@@ -10,7 +10,10 @@ import java.util.Map;
 
 public class ResumeTestData {
     public static void main(String[] args) {
-        Resume resume = new Resume("Григорий Кислин");
+    }
+
+    public static Resume createResume(String uuid, String fullName) {
+        Resume resume = new Resume(uuid, fullName);
 
         Map<ContactType, String> contacts = new HashMap<>();
         contacts.put(ContactType.PHONE, "+7(921) 855-0482");
@@ -141,6 +144,6 @@ public class ResumeTestData {
 
         resume.setSections(sections);
 
-        System.out.println(resume.toString());
+        return resume;
     }
 }

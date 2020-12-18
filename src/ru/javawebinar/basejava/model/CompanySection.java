@@ -23,4 +23,19 @@ public class CompanySection extends AbstractSection {
                 "companies=" + companies +
                 '}' + "\n";
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CompanySection)) return false;
+
+        CompanySection that = (CompanySection) o;
+
+        return companies != null ? companies.equals(that.companies) : that.companies == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return companies != null ? companies.hashCode() : 0;
+    }
 }

@@ -1,8 +1,9 @@
 package ru.javawebinar.basejava.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Period {
+public class Period implements Serializable {
     private LocalDate start;
     private LocalDate end;
     private String name;
@@ -55,5 +56,27 @@ public class Period {
                 ", position='" + name + '\'' +
                 ", experience='" + description + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Period)) return false;
+
+        Period period = (Period) o;
+
+        if (start != null ? !start.equals(period.start) : period.start != null) return false;
+        if (end != null ? !end.equals(period.end) : period.end != null) return false;
+        if (name != null ? !name.equals(period.name) : period.name != null) return false;
+        return description != null ? description.equals(period.description) : period.description == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = start != null ? start.hashCode() : 0;
+        result = 31 * result + (end != null ? end.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        return result;
     }
 }
