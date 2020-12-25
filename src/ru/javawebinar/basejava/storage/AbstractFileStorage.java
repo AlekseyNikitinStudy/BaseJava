@@ -7,7 +7,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AbstractFileStorage extends AbstractStorage<File> {
+public abstract class AbstractFileStorage extends AbstractStorage<File> {
     private final File storage;
 
     public AbstractFileStorage(File storage) {
@@ -65,15 +65,10 @@ public class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     void updateBySearchKey(File searchKey, Resume resume) {
-        addElement(searchKey, resume);
-    }
-
-    @Override
-    void addElement(File searchKey, Resume resume) {
-        try (ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream(searchKey))) {
-            stream.writeObject(resume);
+        try {
+            doWrite(resume, new BufferedOutputStream(new FileOutputStream(searchKey)));
         } catch (IOException e) {
-            throw new StorageException("File write error.", searchKey.getName());
+            throw new StorageException("File write error", resume.getUuid());
         }
     }
 
@@ -85,11 +80,25 @@ public class AbstractFileStorage extends AbstractStorage<File> {
     }
 
     @Override
+    void addElement(File searchKey, Resume resume) {
+        try {
+            searchKey.createNewFile();
+        } catch (IOException e) {
+            throw new StorageException("Couldn't create file ", searchKey.getAbsolutePath());
+        }
+        updateBySearchKey(searchKey, resume);
+    }
+
+    @Override
     Resume getBySearchKey(File searchKey) {
-        try (ObjectInputStream stream = new ObjectInputStream(new FileInputStream(searchKey))) {
-            return (Resume)stream.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            throw new StorageException("File read error.", searchKey.getName());
+        try {
+            return doRead(new BufferedInputStream(new FileInputStream(searchKey)));
+        } catch (IOException e) {
+            throw new StorageException("File read error", searchKey.getName());
         }
     }
+
+    abstract protected void doWrite(Resume resume, OutputStream os) throws IOException;
+
+    abstract protected Resume doRead(InputStream is) throws IOException;
 }

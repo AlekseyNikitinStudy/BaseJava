@@ -1,30 +1,24 @@
 package ru.javawebinar.basejava;
 
-import ru.javawebinar.basejava.model.Resume;
-import ru.javawebinar.basejava.storage.AbstractFileStorage;
-import ru.javawebinar.basejava.storage.AbstractStorage;
-
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 
 public class MainFile {
     public static void main(String[] args) {
-        dir(".\\");
+        dir(".\\", "");
     }
 
-    private static void dir(String path) {
+    private static void dir(String path, String offset) {
         File file = new File(path);
         if (file.isDirectory()) {
             String[] list = file.list();
             if (list != null) {
-                System.out.println("(D)" + file.toString());
+                System.out.println(offset + file.getName().toString());
                 for (String name : list) {
-                    dir(path+"\\"+name);
+                    dir(path+"\\"+name, offset + "\t");
                 }
             }
         } else {
-            System.out.println("(f)" + file.getName());
+            System.out.println(offset + file.getName());
         }
     }
 }
