@@ -2,15 +2,18 @@ package ru.javawebinar.basejava.storage;
 
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
+import ru.javawebinar.basejava.storage.strategy.StreamSerializeStrategy;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractFileStorage extends AbstractStorage<File> {
+public class FileStorage extends AbstractStorage<File> {
     private final File storage;
+    StreamSerializeStrategy streamSerializeStrategy;
 
-    public AbstractFileStorage(File storage) {
+    public FileStorage(File storage, StreamSerializeStrategy streamSerializeStrategy) {
+        this.streamSerializeStrategy = streamSerializeStrategy;
         if (storage == null) {
             throw new StorageException("Storage is null.", null);
         }
@@ -66,7 +69,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     void updateBySearchKey(File searchKey, Resume resume) {
         try {
-            doWrite(resume, new BufferedOutputStream(new FileOutputStream(searchKey)));
+            streamSerializeStrategy.doWrite(resume, new BufferedOutputStream(new FileOutputStream(searchKey)));
         } catch (IOException e) {
             throw new StorageException("File write error", resume.getUuid());
         }
@@ -92,13 +95,9 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     Resume getBySearchKey(File searchKey) {
         try {
-            return doRead(new BufferedInputStream(new FileInputStream(searchKey)));
+            return streamSerializeStrategy.doRead(new BufferedInputStream(new FileInputStream(searchKey)));
         } catch (IOException e) {
             throw new StorageException("File read error", searchKey.getName());
         }
     }
-
-    abstract protected void doWrite(Resume resume, OutputStream os) throws IOException;
-
-    abstract protected Resume doRead(InputStream is) throws IOException;
 }

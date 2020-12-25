@@ -2,6 +2,7 @@ package ru.javawebinar.basejava.storage;
 
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
+import ru.javawebinar.basejava.storage.strategy.StreamSerializeStrategy;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -11,10 +12,12 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public abstract class AbstractPathStorage extends AbstractStorage<Path> {
+public class PathStorage extends AbstractStorage<Path> {
     private final Path storage;
+    StreamSerializeStrategy streamSerializeStrategy;
 
-    public AbstractPathStorage(String path) {
+    public PathStorage(String path, StreamSerializeStrategy streamSerializeStrategy) {
+        this.streamSerializeStrategy = streamSerializeStrategy;
         Path storage = Paths.get(path);
         System.out.println(path);
         Objects.requireNonNull(storage, "directory must not be null");
@@ -65,7 +68,7 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     @Override
     void updateBySearchKey(Path searchKey, Resume resume) {
         try {
-            doWrite(resume, new BufferedOutputStream(new FileOutputStream(searchKey.toFile())));
+            streamSerializeStrategy.doWrite(resume, new BufferedOutputStream(new FileOutputStream(searchKey.toFile())));
         } catch (IOException e) {
             throw new StorageException("File write error", resume.getUuid());
         }
@@ -93,13 +96,9 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     @Override
     Resume getBySearchKey(Path searchKey) {
         try {
-            return doRead(new BufferedInputStream(new FileInputStream(searchKey.toFile())));
+            return streamSerializeStrategy.doRead(new BufferedInputStream(new FileInputStream(searchKey.toFile())));
         } catch (IOException e) {
             throw new StorageException("File not found ", searchKey.toFile().getName());
         }
     }
-
-    abstract protected void doWrite(Resume resume, OutputStream os) throws IOException;
-
-    abstract protected Resume doRead(InputStream is) throws IOException;
 }
