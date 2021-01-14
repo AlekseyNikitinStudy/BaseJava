@@ -9,6 +9,7 @@ import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
+import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -24,6 +25,9 @@ public abstract class AbstractStorageTest {
     protected static final Resume RESUME_2;
     protected static final Resume RESUME_3;
     protected static final Resume RESUME_4;
+
+    protected static final File FILE_STORAGE_DIR = new File("./resumes");
+    protected static final String PATH_STORAGE_DIR_NAME = "./resumesPath";
 
     static {
         RESUME_1 = ResumeTestData.createResume(UUID_1, "Ivan Ivanov");

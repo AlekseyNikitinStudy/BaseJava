@@ -7,6 +7,6 @@ import java.nio.file.Files;
 
 public class FileStorageTest extends AbstractStorageTest {
     public FileStorageTest() {
-        super(new FileStorage(new File("./resumes"), new StreamSerializeStrategy()));
+        super(new FileStorage(FILE_STORAGE_DIR, new StreamSerializeStrategy()));
     }
 }

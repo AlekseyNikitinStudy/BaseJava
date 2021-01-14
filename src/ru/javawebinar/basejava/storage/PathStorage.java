@@ -27,7 +27,6 @@ public class PathStorage extends AbstractStorage<Path> {
         }
 
         this.storage = storage;
-        clear();
     }
 
     public void clear() {
@@ -53,8 +52,7 @@ public class PathStorage extends AbstractStorage<Path> {
 
     @Override
     protected Path getSearchKey(String uuid) {
-        return Paths.get(storage.getFileName().toString(), uuid);
-        //return new File(storage, uuid);
+        return storage.resolve(uuid);
     }
 
     @Override
@@ -69,7 +67,7 @@ public class PathStorage extends AbstractStorage<Path> {
     @Override
     void updateBySearchKey(Path searchKey, Resume resume) {
         try {
-            streamSerializeStrategy.doWrite(resume, new BufferedOutputStream(new FileOutputStream(searchKey.toFile())));
+            streamSerializeStrategy.doWrite(resume, new BufferedOutputStream(Files.newOutputStream(searchKey)));
         } catch (IOException e) {
             throw new StorageException("File write error", resume.getUuid());
         }
@@ -97,7 +95,7 @@ public class PathStorage extends AbstractStorage<Path> {
     @Override
     Resume getBySearchKey(Path searchKey) {
         try {
-            return streamSerializeStrategy.doRead(new BufferedInputStream(new FileInputStream(searchKey.toFile())));
+            return streamSerializeStrategy.doRead(new BufferedInputStream(Files.newInputStream(searchKey)));
         } catch (IOException e) {
             throw new StorageException("File not found ", searchKey.toFile().getName());
         }

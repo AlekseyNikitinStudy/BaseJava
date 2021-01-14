@@ -26,7 +26,6 @@ public class FileStorage extends AbstractStorage<File> {
         }
 
         this.storage = storage;
-        clear();
     }
 
     public void clear() {
