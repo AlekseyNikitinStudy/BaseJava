@@ -13,10 +13,13 @@ public class FileStorage extends AbstractStorage<File> {
     StreamSerializeStrategy streamSerializeStrategy;
 
     public FileStorage(File storage, StreamSerializeStrategy streamSerializeStrategy) {
+
         this.streamSerializeStrategy = streamSerializeStrategy;
         if (storage == null) {
             throw new StorageException("Storage is null.", null);
         }
+
+        storage.mkdir();
 
         if (!storage.isDirectory()) {
             throw new StorageException("Storage " + storage.getAbsolutePath() + " is not directory.", null);

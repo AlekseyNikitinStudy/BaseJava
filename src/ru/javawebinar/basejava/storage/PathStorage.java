@@ -19,6 +19,7 @@ public class PathStorage extends AbstractStorage<Path> {
     public PathStorage(String path, StreamSerializeStrategy streamSerializeStrategy) {
         this.streamSerializeStrategy = streamSerializeStrategy;
         Path storage = Paths.get(path);
+        storage.toFile().mkdir();
         System.out.println(path);
         Objects.requireNonNull(storage, "directory must not be null");
         if (!Files.isDirectory(storage) || !Files.isWritable(storage)) {

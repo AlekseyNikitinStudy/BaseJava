@@ -1,6 +1,7 @@
 package ru.javawebinar.basejava.model;
 
 import java.util.List;
+import java.util.Objects;
 
 public class CompanySection extends AbstractSection {
     private List<Company> companies;
@@ -28,14 +29,12 @@ public class CompanySection extends AbstractSection {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof CompanySection)) return false;
-
         CompanySection that = (CompanySection) o;
-
-        return companies != null ? companies.equals(that.companies) : that.companies == null;
+        return Objects.equals(companies, that.companies);
     }
 
     @Override
     public int hashCode() {
-        return companies != null ? companies.hashCode() : 0;
+        return Objects.hash(companies);
     }
 }

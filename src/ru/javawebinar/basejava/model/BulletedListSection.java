@@ -1,6 +1,7 @@
 package ru.javawebinar.basejava.model;
 
 import java.util.List;
+import java.util.Objects;
 
 public class BulletedListSection extends AbstractSection {
     private List<String> values;
@@ -28,14 +29,12 @@ public class BulletedListSection extends AbstractSection {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof BulletedListSection)) return false;
-
         BulletedListSection that = (BulletedListSection) o;
-
-        return values != null ? values.equals(that.values) : that.values == null;
+        return Objects.equals(values, that.values);
     }
 
     @Override
     public int hashCode() {
-        return values != null ? values.hashCode() : 0;
+        return Objects.hash(values);
     }
 }

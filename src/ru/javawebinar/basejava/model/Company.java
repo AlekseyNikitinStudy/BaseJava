@@ -2,6 +2,7 @@ package ru.javawebinar.basejava.model;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 public class Company implements Serializable {
     private String name;
@@ -41,17 +42,13 @@ public class Company implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Company)) return false;
-
         Company company = (Company) o;
-
-        if (name != null ? !name.equals(company.name) : company.name != null) return false;
-        return periods != null ? periods.equals(company.periods) : company.periods == null;
+        return Objects.equals(name, company.name)
+                && Objects.equals(periods, company.periods);
     }
 
     @Override
     public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + (periods != null ? periods.hashCode() : 0);
-        return result;
+        return Objects.hash(name, periods);
     }
 }

@@ -1,5 +1,7 @@
 package ru.javawebinar.basejava.model;
 
+import java.util.Objects;
+
 public class SingleLineSection extends AbstractSection {
     private String value;
 
@@ -26,14 +28,12 @@ public class SingleLineSection extends AbstractSection {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof SingleLineSection)) return false;
-
         SingleLineSection that = (SingleLineSection) o;
-
-        return value != null ? value.equals(that.value) : that.value == null;
+        return Objects.equals(value, that.value);
     }
 
     @Override
     public int hashCode() {
-        return value != null ? value.hashCode() : 0;
+        return Objects.hash(value);
     }
 }
