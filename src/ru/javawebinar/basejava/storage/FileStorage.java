@@ -2,19 +2,21 @@ package ru.javawebinar.basejava.storage;
 
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
+import ru.javawebinar.basejava.storage.strategy.SerializeStrategy;
 import ru.javawebinar.basejava.storage.strategy.StreamSerializeStrategy;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FileStorage extends AbstractStorage<File> {
     private final File storage;
-    StreamSerializeStrategy streamSerializeStrategy;
+    SerializeStrategy serializeStrategy;
 
-    public FileStorage(File storage, StreamSerializeStrategy streamSerializeStrategy) {
+    public FileStorage(File storage, StreamSerializeStrategy serializeStrategy) {
 
-        this.streamSerializeStrategy = streamSerializeStrategy;
+        this.serializeStrategy = serializeStrategy;
         if (storage == null) {
             throw new StorageException("Storage is null.", null);
         }
@@ -29,20 +31,33 @@ public class FileStorage extends AbstractStorage<File> {
     }
 
     public void clear() {
-        File[] files = storage.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                removeElement(file);
-            }
+        File[] files = getResumeArray();
+        for (File file : files) {
+            removeElement(file);
         }
     }
 
     public int size() {
-        String[] list = storage.list();
-        if (list == null) {
+        return getResumeArray().length;
+    }
+
+    @Override
+    protected List<Resume> getAll() {
+        File[] files = getResumeArray();
+
+        List<Resume> list = new ArrayList<>(files.length);
+        for (File file : files) {
+            list.add(getBySearchKey(file));
+        }
+        return list;
+    }
+
+    private File[] getResumeArray() {
+        File[] files = storage.listFiles();
+        if (files == null) {
             throw new StorageException("Storage read error.", null);
         }
-        return list.length;
+        return files;
     }
 
     @Override
@@ -56,22 +71,9 @@ public class FileStorage extends AbstractStorage<File> {
     }
 
     @Override
-    protected List<Resume> getAll() {
-        File[] files = storage.listFiles();
-        if (files == null) {
-            throw new StorageException("Storage read error.", null);
-        }
-        List<Resume> list = new ArrayList<>(files.length);
-        for (File file : files) {
-            list.add(getBySearchKey(file));
-        }
-        return list;
-    }
-
-    @Override
     void updateBySearchKey(File searchKey, Resume resume) {
         try {
-            streamSerializeStrategy.doWrite(resume, new BufferedOutputStream(new FileOutputStream(searchKey)));
+            serializeStrategy.doWrite(resume, new BufferedOutputStream(new FileOutputStream(searchKey)));
         } catch (IOException e) {
             throw new StorageException("File write error", resume.getUuid());
         }
@@ -97,7 +99,7 @@ public class FileStorage extends AbstractStorage<File> {
     @Override
     Resume getBySearchKey(File searchKey) {
         try {
-            return streamSerializeStrategy.doRead(new BufferedInputStream(new FileInputStream(searchKey)));
+            return serializeStrategy.doRead(new BufferedInputStream(new FileInputStream(searchKey)));
         } catch (IOException e) {
             throw new StorageException("File read error", searchKey.getName());
         }
