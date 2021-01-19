@@ -14,7 +14,7 @@ public class FileStorage extends AbstractStorage<File> {
     private final File storage;
     SerializeStrategy serializeStrategy;
 
-    public FileStorage(File storage, StreamSerializeStrategy serializeStrategy) {
+    public FileStorage(File storage, SerializeStrategy serializeStrategy) {
 
         this.serializeStrategy = serializeStrategy;
         if (storage == null) {
@@ -50,14 +50,6 @@ public class FileStorage extends AbstractStorage<File> {
             list.add(getBySearchKey(file));
         }
         return list;
-    }
-
-    private File[] getResumeArray() {
-        File[] files = storage.listFiles();
-        if (files == null) {
-            throw new StorageException("Storage read error.", null);
-        }
-        return files;
     }
 
     @Override
@@ -103,5 +95,13 @@ public class FileStorage extends AbstractStorage<File> {
         } catch (IOException e) {
             throw new StorageException("File read error", searchKey.getName());
         }
+    }
+
+    private File[] getResumeArray() {
+        File[] files = storage.listFiles();
+        if (files == null) {
+            throw new StorageException("Storage read error.", null);
+        }
+        return files;
     }
 }

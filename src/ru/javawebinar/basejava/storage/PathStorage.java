@@ -18,7 +18,7 @@ public class PathStorage extends AbstractStorage<Path> {
     private final Path storage;
     SerializeStrategy serializeStrategy;
 
-    public PathStorage(String path, StreamSerializeStrategy serializeStrategy) {
+    public PathStorage(String path, SerializeStrategy serializeStrategy) {
         this.serializeStrategy = serializeStrategy;
         Path storage = Paths.get(path);
         storage.toFile().mkdir();
@@ -32,24 +32,16 @@ public class PathStorage extends AbstractStorage<Path> {
     }
 
     public void clear() {
-        getResumeList("Path delete error").forEach(this::removeElement);
+        getResumeList().forEach(this::removeElement);
     }
 
     public int size() {
-        return (int) getResumeList("Storage read error.").count();
+        return (int) getResumeList().count();
     }
 
     @Override
     protected List<Resume> getAll() {
-        return getResumeList("Storage read error.").map(this::getBySearchKey).collect(Collectors.toList());
-    }
-
-    private Stream<Path> getResumeList(String exceptionMessage) {
-        try {
-            return Files.list(storage);
-        } catch (IOException e) {
-            throw new StorageException(exceptionMessage, null);
-        }
+        return getResumeList().map(this::getBySearchKey).collect(Collectors.toList());
     }
 
     @Override
@@ -96,6 +88,14 @@ public class PathStorage extends AbstractStorage<Path> {
             return serializeStrategy.doRead(new BufferedInputStream(Files.newInputStream(searchKey)));
         } catch (IOException e) {
             throw new StorageException("File not found ", searchKey.toFile().getName());
+        }
+    }
+
+    private Stream<Path> getResumeList() {
+        try {
+            return Files.list(storage);
+        } catch (IOException e) {
+            throw new StorageException("Storage read error.", null);
         }
     }
 }

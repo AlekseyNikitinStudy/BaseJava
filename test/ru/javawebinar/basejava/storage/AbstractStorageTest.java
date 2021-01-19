@@ -26,8 +26,7 @@ public abstract class AbstractStorageTest {
     protected static final Resume RESUME_3;
     protected static final Resume RESUME_4;
 
-    protected static final File FILE_STORAGE_DIR = new File("./resumes");
-    protected static final String PATH_STORAGE_DIR_NAME = "./resumesPath";
+    protected static final File STORAGE_DIR = new File("./resumes");
 
     static {
         RESUME_1 = ResumeTestData.createResume(UUID_1, "Ivan Ivanov");
