@@ -1,5 +1,7 @@
 package ru.javawebinar.basejava.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import java.util.List;
 import java.util.Objects;
 
@@ -8,6 +10,9 @@ public class BulletedListSection extends AbstractSection {
 
     public BulletedListSection(List<String> values) {
         this.values = values;
+    }
+
+    public BulletedListSection() {
     }
 
     public List<String> getValues() {

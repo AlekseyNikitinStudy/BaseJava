@@ -1,11 +1,19 @@
 package ru.javawebinar.basejava.model;
 
+import ru.javawebinar.basejava.util.LocalDateAdapter;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Period implements Serializable {
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
     private LocalDate start;
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
     private LocalDate end;
     private String name;
     private String description;
@@ -15,6 +23,9 @@ public class Period implements Serializable {
         this.end = end;
         this.name = name;
         this.description = description;
+    }
+
+    public Period() {
     }
 
     public LocalDate getStart() {

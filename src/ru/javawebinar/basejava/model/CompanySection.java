@@ -1,5 +1,7 @@
 package ru.javawebinar.basejava.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import java.util.List;
 import java.util.Objects;
 
@@ -8,6 +10,9 @@ public class CompanySection extends AbstractSection {
 
     public CompanySection(List<Company> companies) {
         this.companies = companies;
+    }
+
+    public CompanySection() {
     }
 
     public List<Company> getCompanies() {
