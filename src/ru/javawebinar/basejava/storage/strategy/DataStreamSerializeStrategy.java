@@ -34,10 +34,6 @@ public class DataStreamSerializeStrategy implements SerializeStrategy {
         }
     }
 
-    private interface MapReader {
-        void read() throws IOException;
-    }
-
     private AbstractSection readSection(DataInputStream dis, SectionType sectionType) throws IOException {
         switch(sectionType) {
             case PERSONAL:
@@ -49,8 +45,8 @@ public class DataStreamSerializeStrategy implements SerializeStrategy {
             case EDUCATION:
             case EXPERIENCE:
                 return new CompanySection(readList(dis,
-                                () -> new Company(dis.readUTF(), readList(dis,
-                                        () -> new Period(readLocalDate(dis), readLocalDate(dis), dis.readUTF(), dis.readUTF())))));
+                                () -> new Company(dis.readUTF(), dis.readUTF(), readList(dis,
+                                        () -> new Company.Period(readLocalDate(dis), readLocalDate(dis), dis.readUTF(), dis.readUTF())))));
             default:
                 throw new IllegalStateException();
         }
@@ -63,10 +59,6 @@ public class DataStreamSerializeStrategy implements SerializeStrategy {
             list.add(entryReader.read());
         }
         return list;
-    }
-
-    private interface EntryReader<T> {
-        T read() throws IOException;
     }
 
     private LocalDate readLocalDate(DataInputStream dis) throws IOException {
@@ -103,7 +95,8 @@ public class DataStreamSerializeStrategy implements SerializeStrategy {
                     case EXPERIENCE:
                         writeCollection(dos, ((CompanySection)section).getCompanies(),
                                 companyEntry -> {
-                            dos.writeUTF(companyEntry.getName());
+                            dos.writeUTF(companyEntry.getHomePage().getName());
+                            dos.writeUTF(companyEntry.getHomePage().getUrl());
                             writeCollection(dos, companyEntry.getPeriods(),
                                     periodEntry -> {
                                 writeLocalDate(dos, periodEntry.getStart());
@@ -133,5 +126,13 @@ public class DataStreamSerializeStrategy implements SerializeStrategy {
         dos.writeInt(localDate.getYear());
         dos.writeInt(localDate.getMonth().getValue());
         dos.writeInt(localDate.getDayOfMonth());
+    }
+
+    public interface EntryReader<T> {
+        T read() throws IOException;
+    }
+
+    public interface MapReader {
+        void read() throws IOException;
     }
 }

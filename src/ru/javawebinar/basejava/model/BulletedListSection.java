@@ -9,6 +9,7 @@ public class BulletedListSection extends AbstractSection {
     private List<String> values;
 
     public BulletedListSection(List<String> values) {
+        Objects.requireNonNull(values, "values must not be null");
         this.values = values;
     }
 

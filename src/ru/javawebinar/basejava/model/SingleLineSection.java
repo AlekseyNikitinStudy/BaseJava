@@ -8,6 +8,7 @@ public class SingleLineSection extends AbstractSection {
     private String value;
 
     public SingleLineSection(String value) {
+        Objects.requireNonNull(value, "value must not be null");
         this.value = value;
     }
 
