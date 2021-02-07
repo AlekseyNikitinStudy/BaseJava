@@ -95,8 +95,9 @@ public class DataStreamSerializeStrategy implements SerializeStrategy {
                     case EXPERIENCE:
                         writeCollection(dos, ((CompanySection)section).getCompanies(),
                                 companyEntry -> {
-                            dos.writeUTF(companyEntry.getHomePage().getName());
-                            dos.writeUTF(companyEntry.getHomePage().getUrl());
+                            Link homePage = companyEntry.getHomePage();
+                            dos.writeUTF(homePage.getName());
+                            dos.writeUTF(homePage.getUrl());
                             writeCollection(dos, companyEntry.getPeriods(),
                                     periodEntry -> {
                                 writeLocalDate(dos, periodEntry.getStart());
