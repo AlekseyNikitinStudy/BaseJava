@@ -4,6 +4,14 @@ import static java.lang.Thread.sleep;
 
 public class MainDeadlock {
 
+    public static void main(String[] args) {
+        final Lock lockA = new Lock("LockA");
+        final Lock lockB = new Lock("LockB");
+
+        new Thread(() -> lockA.outInfoAndPass(lockB)).start();
+        new Thread(() -> lockB.outInfoAndPass(lockA)).start();
+    }
+
     static class Lock {
         private final String name;
 
@@ -30,13 +38,5 @@ public class MainDeadlock {
             System.out.println(name + " in the method pass(Lock anotherLock).");
             anotherLock.outInfo();
         }
-    }
-
-    public static void main(String[] args) {
-        final Lock lockA = new Lock("LockA");
-        final Lock lockB = new Lock("LockB");
-
-        new Thread(() -> lockA.outInfoAndPass(lockB)).start();
-        new Thread(() -> lockB.outInfoAndPass(lockA)).start();
     }
 }
