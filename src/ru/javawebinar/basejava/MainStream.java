@@ -1,15 +1,17 @@
 package ru.javawebinar.basejava;
 
-import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class MainStream {
     public static void main(String[] args) {
-        int[] values = {-1,9,8,7,2,2,1,12,10};
+        int[] values = {-1,9,8,7,6,6,2,2,1,12,10};
         System.out.println(Arrays.toString(values) + " -> " + minValue(values));
 
-        List<Integer> integers = Arrays.asList(0,1,2,3,4,5);
+        List<Integer> integers = Arrays.asList(8,9);
         System.out.println(integers + " -> " + oddOrEven(integers));
     }
 
@@ -18,19 +20,11 @@ public class MainStream {
             return 0;
         }
 
-        AtomicReference<Integer> result = new AtomicReference<>(0);
-        AtomicReference<Integer> index = new AtomicReference<>(0);
-        Arrays.stream(values)
-                .filter(value -> value < 10 && value > 0)
+        return Arrays.stream(values)
                 .distinct()
-                .boxed()
-                .sorted(Collections.reverseOrder())
-                .forEach(value -> {
-                    result.set(result.get() + value * (int) Math.pow(10, index.get()));
-                    index.set(index.get() + 1);
-                });
-
-        return result.get();
+                .filter(value -> value < 10 && value > 0)
+                .sorted()
+                .reduce(0, (identity, value) -> identity * 10 + value);
     }
 
     private static List<Integer> oddOrEven(List<Integer> integers) {
@@ -40,7 +34,7 @@ public class MainStream {
 
         Map<Boolean,List<Integer>> mapOddsEvens = integers.stream()
                 .collect(Collectors.partitioningBy(value -> value % 2 == 0));
-        
-        return (mapOddsEvens.get(false).size() % 2) == 0 ? mapOddsEvens.get(true) : mapOddsEvens.get(false);
+
+        return mapOddsEvens.get((mapOddsEvens.get(false).size() % 2) != 0);
     }
 }
