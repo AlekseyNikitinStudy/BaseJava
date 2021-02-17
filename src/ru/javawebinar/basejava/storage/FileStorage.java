@@ -18,13 +18,13 @@ public class FileStorage extends AbstractStorage<File> {
 
         this.serializeStrategy = serializeStrategy;
         if (storage == null) {
-            throw new StorageException("Storage is null.", null);
+            throw new StorageException("Storage is null.");
         }
 
         storage.mkdir();
 
         if (!storage.isDirectory()) {
-            throw new StorageException("Storage " + storage.getAbsolutePath() + " is not directory.", null);
+            throw new StorageException("Storage " + storage.getAbsolutePath() + " is not directory.");
         }
 
         this.storage = storage;
@@ -100,7 +100,7 @@ public class FileStorage extends AbstractStorage<File> {
     private File[] getResumeArray() {
         File[] files = storage.listFiles();
         if (files == null) {
-            throw new StorageException("Storage read error.", null);
+            throw new StorageException("Storage read error.");
         }
         return files;
     }

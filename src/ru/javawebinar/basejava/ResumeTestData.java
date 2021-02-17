@@ -13,6 +13,7 @@ public class ResumeTestData {
     public static Resume createResume(String uuid, String fullName) {
         Resume resume = new Resume(uuid, fullName);
 
+        /*
         Map<ContactType, String> contacts = new HashMap<>();
         contacts.put(ContactType.PHONE, "+7(921) 855-0482");
         contacts.put(ContactType.SKYPE, "grigory.kislin");
@@ -154,6 +155,7 @@ public class ResumeTestData {
         sections.put(SectionType.EDUCATION, education);
 
         resume.setSections(sections);
+        */
 
         return resume;
     }

@@ -18,7 +18,7 @@ public class StreamSerializeStrategy implements SerializeStrategy {
         try (ObjectInputStream stream = new ObjectInputStream(is)) {
             return (Resume)stream.readObject();
         } catch (ClassNotFoundException e) {
-            throw new StorageException("File read error.", null);
+            throw new StorageException("File read error.");
         }
     }
 }
