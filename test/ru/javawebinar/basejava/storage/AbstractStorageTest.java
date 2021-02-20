@@ -17,6 +17,11 @@ import java.util.List;
 public abstract class AbstractStorageTest {
     protected Storage storage;
 
+    //private static final String UUID_1 = "831f4271-179f-4825-85c2-b855b201f97a";
+    //private static final String UUID_2 = "72736f7f-de50-4053-897b-491d5e586d14";
+    //private static final String UUID_3 = "927d59ef-afea-421b-9bd7-0ddaf4a55d53";
+    //private static final String UUID_4 = "6a5a5bef-1085-482d-af98-b857e298fee5";
+
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";

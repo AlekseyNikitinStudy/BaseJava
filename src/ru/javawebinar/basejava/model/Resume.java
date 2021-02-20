@@ -12,6 +12,7 @@ import java.util.UUID;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Resume implements Serializable {
+    private static final int UUID_LENGTH = 36;
 
     // Unique identifier
     private String uuid;
@@ -29,7 +30,7 @@ public class Resume implements Serializable {
     public Resume(String uuid, String fullName) {
         Objects.requireNonNull(uuid, "uuid must not be null");
         Objects.requireNonNull(fullName, "fullName must not be null");
-        this.uuid = uuid;
+        this.uuid = String.format("%-" + UUID_LENGTH + "s", uuid);
         this.fullName = fullName;
     }
 
