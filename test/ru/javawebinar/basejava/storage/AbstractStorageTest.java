@@ -13,19 +13,15 @@ import ru.javawebinar.basejava.model.Resume;
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 public abstract class AbstractStorageTest {
     protected Storage storage;
 
-    //private static final String UUID_1 = "831f4271-179f-4825-85c2-b855b201f97a";
-    //private static final String UUID_2 = "72736f7f-de50-4053-897b-491d5e586d14";
-    //private static final String UUID_3 = "927d59ef-afea-421b-9bd7-0ddaf4a55d53";
-    //private static final String UUID_4 = "6a5a5bef-1085-482d-af98-b857e298fee5";
-
-    private static final String UUID_1 = "uuid1";
-    private static final String UUID_2 = "uuid2";
-    private static final String UUID_3 = "uuid3";
-    private static final String UUID_4 = "uuid4";
+    private static final String UUID_1 = UUID.randomUUID().toString();
+    private static final String UUID_2 = UUID.randomUUID().toString();
+    private static final String UUID_3 = UUID.randomUUID().toString();
+    private static final String UUID_4 = UUID.randomUUID().toString();
 
     protected static final Resume RESUME_1;
     protected static final Resume RESUME_2;
@@ -108,6 +104,8 @@ public abstract class AbstractStorageTest {
         expectedResumes.add(RESUME_1);
         expectedResumes.add(RESUME_2);
         expectedResumes.add(RESUME_3);
+        expectedResumes.sort(Resume.COMPARATOR_FULLNAME_UUID);
+
         Assert.assertEquals(expectedResumes, actualResumes);
     }
 

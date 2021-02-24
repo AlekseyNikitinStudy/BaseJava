@@ -4,15 +4,13 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
-import java.util.EnumMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Resume implements Serializable {
-    private static final int UUID_LENGTH = 36;
+    public static final Comparator<Resume> COMPARATOR_FULLNAME_UUID = Comparator.comparing(Resume::getFullName)
+            .thenComparing(Resume::getUuid);
 
     // Unique identifier
     private String uuid;
@@ -30,7 +28,7 @@ public class Resume implements Serializable {
     public Resume(String uuid, String fullName) {
         Objects.requireNonNull(uuid, "uuid must not be null");
         Objects.requireNonNull(fullName, "fullName must not be null");
-        this.uuid = String.format("%-" + UUID_LENGTH + "s", uuid);
+        this.uuid = uuid;
         this.fullName = fullName;
     }
 
@@ -71,7 +69,8 @@ public class Resume implements Serializable {
 
     @Override
     public String toString() {
-        return fullName + "\n"
+        return "[" + fullName + "]\n"
+                + uuid + "\n"
                 + contacts.toString() + "\n"
                 + sections.toString() + "\n";
     }
