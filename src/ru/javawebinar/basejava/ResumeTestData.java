@@ -1,10 +1,8 @@
 package ru.javawebinar.basejava;
 
-import ru.javawebinar.basejava.model.*;
+import ru.javawebinar.basejava.model.ContactType;
+import ru.javawebinar.basejava.model.Resume;
 
-import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +11,6 @@ public class ResumeTestData {
     public static Resume createResume(String uuid, String fullName) {
         Resume resume = new Resume(uuid, fullName);
 
-        /*
         Map<ContactType, String> contacts = new HashMap<>();
         contacts.put(ContactType.PHONE, "+7(921) 855-0482");
         contacts.put(ContactType.SKYPE, "grigory.kislin");
@@ -24,6 +21,7 @@ public class ResumeTestData {
         contacts.put(ContactType.HOMEPAGE, "http://gkislin.ru/");
         resume.setContacts(contacts);
 
+        /*
         Map<SectionType, AbstractSection> sections = new HashMap<>();
 
         AbstractSection objective = new SingleLineSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям");
