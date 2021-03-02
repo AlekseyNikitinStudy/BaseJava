@@ -42,4 +42,9 @@ public class SingleLineSection extends AbstractSection {
     public int hashCode() {
         return Objects.hash(value);
     }
+
+    @Override
+    public String getStringForDb() {
+        return value;
+    }
 }

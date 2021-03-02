@@ -43,4 +43,9 @@ public class CompanySection extends AbstractSection {
     public int hashCode() {
         return Objects.hash(companies);
     }
+
+    @Override
+    public String getStringForDb() {
+        return "";
+    }
 }

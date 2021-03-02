@@ -43,4 +43,9 @@ public class BulletedListSection extends AbstractSection {
     public int hashCode() {
         return Objects.hash(values);
     }
+
+    @Override
+    public String getStringForDb() {
+        return String.join("\n", values);
+    }
 }
