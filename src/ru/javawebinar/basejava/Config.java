@@ -14,7 +14,7 @@ public class Config {
             : "./config/resumes.properties" );
     //private static final File PROPS = new File("C:/JavaProjects/Resume/resumes.properties");
 
-    private static final Config INSTANCE = new Config(PROPS);
+    private static final Config INSTANCE = new Config();
 
     private Properties props = new Properties();
     private File storageDir;
@@ -24,7 +24,7 @@ public class Config {
         return INSTANCE;
     }
 
-    private Config(File PROPS) {
+    private Config() {
         try (InputStream is = new FileInputStream(PROPS)) {
             props.load(is);
             storageDir = new File(props.getProperty("storage.dir"));
