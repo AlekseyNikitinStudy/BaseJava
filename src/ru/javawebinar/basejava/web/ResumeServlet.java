@@ -12,6 +12,13 @@ import java.io.Writer;
 import java.util.List;
 
 public class ResumeServlet extends HttpServlet {
+    private Storage sqlStorage;
+
+    @Override
+    public void init() throws ServletException {
+        sqlStorage = Config.get().getSqlStorage();
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
@@ -24,7 +31,7 @@ public class ResumeServlet extends HttpServlet {
         writer.write("<h1>Resumes</h1>");
         writer.write("<table border=\"1\">");
         writer.write("<th>UUID</th><th>Full name</th>");
-        Config.get().getSqlStorage().getAllSorted().forEach(r -> {
+        sqlStorage.getAllSorted().forEach(r -> {
             try {
                 outResume(response, writer, r);
             } catch (IOException e) {

@@ -1,7 +1,5 @@
 package ru.javawebinar.basejava.model;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import java.util.List;
 import java.util.Objects;
 
@@ -42,10 +40,5 @@ public class CompanySection extends AbstractSection {
     @Override
     public int hashCode() {
         return Objects.hash(companies);
-    }
-
-    @Override
-    public String getStringForDb() {
-        return "";
     }
 }

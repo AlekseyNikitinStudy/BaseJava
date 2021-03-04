@@ -1,7 +1,5 @@
 package ru.javawebinar.basejava.model;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import java.util.Objects;
 
 public class SingleLineSection extends AbstractSection {
@@ -41,10 +39,5 @@ public class SingleLineSection extends AbstractSection {
     @Override
     public int hashCode() {
         return Objects.hash(value);
-    }
-
-    @Override
-    public String getStringForDb() {
-        return value;
     }
 }
