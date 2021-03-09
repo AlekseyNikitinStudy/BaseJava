@@ -2,10 +2,8 @@ package ru.javawebinar.basejava;
 
 import ru.javawebinar.basejava.model.*;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.time.LocalDate;
+import java.util.*;
 
 public class ResumeTestData {
 
@@ -54,7 +52,7 @@ public class ResumeTestData {
                 "Родной русский, английский \"upper intermediate\"."));
         sections.put(SectionType.QUALIFICATIONS, qualification);
 
-        /*
+
         AbstractSection experience = new CompanySection(Arrays.asList(
                 new Company("Java Online Projects", "http://javaops.ru",
                         Collections.singletonList(new Company.Period(LocalDate.of(2013, 10, 1),
@@ -152,7 +150,7 @@ public class ResumeTestData {
                                 null)))
         ));
         sections.put(SectionType.EDUCATION, education);
-        */
+
 
         resume.setSections(sections);
 

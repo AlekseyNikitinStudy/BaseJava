@@ -151,5 +151,10 @@ public class Company implements Serializable {
             return Objects.hash(start, end, name, description);
         }
     }
+
+    public String getPrettyDate(LocalDate localDate) {
+        return (localDate.getYear() + String.format("-%02d", localDate.getMonthValue()));
+    }
+
 }
 
