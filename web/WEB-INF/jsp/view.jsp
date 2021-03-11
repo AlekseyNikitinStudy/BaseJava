@@ -34,9 +34,11 @@
                     <%=((SingleLineSection) section).getValue()%>
                 </c:when>
                 <c:when test="${type=='QUALIFICATIONS' || type=='ACHIEVEMENT'}">
-                    <c:forEach var="entry" items="<%=((BulletedListSection) section).getValues()%>">
-                        <BR>${entry}
-                    </c:forEach>
+                    <ul>
+                        <c:forEach var="entry" items="<%=((BulletedListSection) section).getValues()%>">
+                            <li>${entry}</li>
+                        </c:forEach>
+                    </ul>
                 </c:when>
                 <c:when test="${type=='EXPERIENCE' || type=='EDUCATION'}">
                     <c:forEach var="org" items="<%=((CompanySection) section).getCompanies()%>">

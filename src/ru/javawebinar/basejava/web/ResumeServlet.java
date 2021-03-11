@@ -3,13 +3,17 @@ package ru.javawebinar.basejava.web;
 import ru.javawebinar.basejava.Config;
 import ru.javawebinar.basejava.model.*;
 import ru.javawebinar.basejava.storage.Storage;
+import ru.javawebinar.basejava.util.StringUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ResumeServlet extends HttpServlet {
     private Storage sqlStorage;
@@ -55,8 +59,8 @@ public class ResumeServlet extends HttpServlet {
         Resume r = sqlStorage.get(uuid);
         r.setFullName(fullName);
         for (ContactType type : ContactType.values()) {
-            String value = request.getParameter(type.name());
-            if (value != null && value.trim().length() != 0) {
+            String value = StringUtil.removeUselessSymbols(request.getParameter(type.name()));
+            if (value != null && !value.isEmpty()) {
                 r.addContact(type, value);
             } else {
                 r.getContacts().remove(type);
@@ -65,7 +69,7 @@ public class ResumeServlet extends HttpServlet {
 
         for (SectionType type : SectionType.values()) {
             String value = request.getParameter(type.name());
-            if (value != null && value.trim().length() != 0) {
+            if (value != null) {
                 switch (type) {
                     case OBJECTIVE:
                     case PERSONAL:
@@ -73,7 +77,10 @@ public class ResumeServlet extends HttpServlet {
                         break;
                     case ACHIEVEMENT:
                     case QUALIFICATIONS:
-                        r.addSection(type, new BulletedListSection(Arrays.asList(value.split("\\n"))));
+                        r.addSection(type,
+                                new BulletedListSection(Arrays.stream(value.split("\\n"))
+                                        .filter(s -> StringUtil.removeUselessSymbols(s).length() > 0)
+                                        .collect(Collectors.toList())));
                         break;
                 }
             } else {
