@@ -41,20 +41,20 @@
                     </ul>
                 </c:when>
                 <c:when test="${type=='EXPERIENCE' || type=='EDUCATION'}">
-                    <c:forEach var="org" items="<%=((CompanySection) section).getCompanies()%>">
+                    <c:forEach var="company" items="<%=((CompanySection) section).getCompanies()%>">
                         <c:choose>
-                            <c:when test="${empty org.homePage.url}">
-                                <h3>${org.homePage.name}</h3>
+                            <c:when test="${empty company.homePage.url}">
+                                <h3>${company.homePage.name}</h3>
                             </c:when>
                             <c:otherwise>
-                                <h3><a href="${org.homePage.url}">${org.homePage.name}</a></h3>
+                                <h3><a href="${company.homePage.url}">${company.homePage.name}</a></h3>
                             </c:otherwise>
                         </c:choose>
-                        <c:forEach var="position" items="${org.periods}">
-                            <jsp:useBean id="position" type="ru.javawebinar.basejava.model.Company.Period"/>
-                            <BR>с <B>${org.getPrettyDate(position.start)}</B> по <B>${org.getPrettyDate(position.end)}</B>
-                            <BR>${position.name}
-                            <BR>${position.description}
+                        <c:forEach var="period" items="${company.periods}">
+                            <jsp:useBean id="period" type="ru.javawebinar.basejava.model.Company.Period"/>
+                            <BR>с <B>${company.getPrettyDate(period.start)}</B> по <B>${company.getPrettyDate(period.end)}</B>
+                            <BR>${period.name}
+                            <BR>${period.description}
                         </c:forEach>
                     </c:forEach>
                 </c:when>

@@ -1,5 +1,7 @@
 package ru.javawebinar.basejava.model;
 
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,6 +14,10 @@ public class BulletedListSection extends AbstractSection {
     }
 
     public BulletedListSection() {
+    }
+
+    public static BulletedListSection createEmpty() {
+        return new BulletedListSection(Collections.singletonList(""));
     }
 
     public List<String> getValues() {

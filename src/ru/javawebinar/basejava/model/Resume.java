@@ -35,6 +35,17 @@ public class Resume implements Serializable {
     public Resume() {
     }
 
+    public static Resume createEmpty() {
+        Resume resume = new Resume();
+        resume.addSection(SectionType.OBJECTIVE, SingleLineSection.createEmpty());
+        resume.addSection(SectionType.PERSONAL, SingleLineSection.createEmpty());
+        resume.addSection(SectionType.ACHIEVEMENT, BulletedListSection.createEmpty());
+        resume.addSection(SectionType.QUALIFICATIONS, BulletedListSection.createEmpty());
+        resume.addSection(SectionType.EXPERIENCE, CompanySection.createEmpty());
+        resume.addSection(SectionType.EDUCATION, CompanySection.createEmpty());
+        return resume;
+    }
+
     public String getUuid() {
         return uuid;
     }

@@ -7,10 +7,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Company implements Serializable {
@@ -91,6 +88,10 @@ public class Company implements Serializable {
         }
 
         public Period() {
+        }
+
+        public static Period createEmpty() {
+            return new Period(LocalDate.now(), LocalDate.now(), "", "");
         }
 
         public LocalDate getStart() {

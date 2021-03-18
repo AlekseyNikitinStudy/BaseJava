@@ -13,6 +13,10 @@ public class SingleLineSection extends AbstractSection {
     public SingleLineSection() {
     }
 
+    public static SingleLineSection createEmpty() {
+        return new SingleLineSection("");
+    }
+
     public String getValue() {
         return value;
     }

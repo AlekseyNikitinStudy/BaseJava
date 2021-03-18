@@ -1,5 +1,6 @@
 package ru.javawebinar.basejava.model;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,6 +13,11 @@ public class CompanySection extends AbstractSection {
     }
 
     public CompanySection() {
+    }
+
+    public static CompanySection createEmpty() {
+        return new CompanySection(Collections.singletonList(new Company("", "",
+                Collections.singletonList(Company.Period.createEmpty()))));
     }
 
     public List<Company> getCompanies() {
